@@ -1,11 +1,16 @@
 <script>
-	export let name;
 </script>
 
 <main>
-	<h1>Hello {name}!</h1>
-	<p>Visit the <a href="https://svelte.dev/tutorial">Svelte tutorial</a> to learn how to build Svelte apps.</p>
 </main>
 
 <style>
+	main {
+		width: auto;
+		height: 100vh;
+		display:flex;
+		align-items: center;
+		justify-content: center;
+		margin: 0 auto;
+	}
 </style>
