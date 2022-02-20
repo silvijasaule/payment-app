@@ -1,12 +1,14 @@
 <script>
     import Card from '../atoms/Card.svelte';
 	import Button from '../atoms/Button.svelte';
+    import {push, pop, replace} from 'svelte-spa-router';
+
 </script>
 
 <Card>
 	<h1 class="card__title"> 🌞Good morning, degen.</h1>
     <h3 class="card__subtitle">Please connect your wallet to claim your earnings.</h3>
-	<Button title={"Connect wallet"} />
+	<Button title={"Connect wallet"} onClick={() => push('/claim/')} />
 </Card>
 
 <style lang="scss">
