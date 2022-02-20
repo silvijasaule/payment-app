@@ -1,25 +1,19 @@
 <script>
-	import Button from './Button.svelte';
+    import Card from '../atoms/Card.svelte';
+	import Button from '../atoms/Button.svelte';
 </script>
 
-<div class="card">
+<Card>
 	<h1 class="card__title"> 🌞Good morning, degen.</h1>
     <h3 class="card__subtitle">Please connect your wallet to claim your earnings.</h3>
 	<Button title={"Connect wallet"} />
-</div>
+</Card>
 
 <style lang="scss">
 
-    @import '../styles/colors.scss';
+    @import '../../styles/colors.scss';
 
     .card{
-        align-items: center;
-        background-color: rgba($color: $white, $alpha: 0.6);
-        border-radius: 20px;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        padding: 60px;
 
         &__title {
             color: $text-color;
@@ -28,9 +22,10 @@
         }
 
         &__subtitle {
-            color:$light-text-color;
+            color:rgba($text-color, 0.8);
             font-size: 18px;
             margin: 0 0 48px;
+            font-weight: 500;
         }
     }
 </style>
