@@ -8,7 +8,8 @@
 
 <style lang="scss">
 
-    @import '../styles/colors.scss';
+    @import '../../styles/colors.scss';
+    
     button {
         background-color: $button-color;
         color: $white;
@@ -18,7 +19,7 @@
         font-weight: 700;
         font-size: 18px;
         line-height: 24px;
-        /* width: 100%; */
+        width: 100%;
     }
 
     button:hover {
