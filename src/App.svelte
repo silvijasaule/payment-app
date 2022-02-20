@@ -1,7 +1,17 @@
 <script>
+	import Router from 'svelte-spa-router';
+	import HelloCard from "./components/organisms/HelloCard.svelte";
+	import ClaimCard from "./components/organisms/ClaimCard.svelte";
+
+	const routes = {
+	'/': HelloCard,
+	'/claim/': ClaimCard
+	}
+
 </script>
 
 <main>
+	<Router {routes}/>
 </main>
 
 <style>
