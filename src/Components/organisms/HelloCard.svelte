@@ -19,14 +19,14 @@
 
         &__title {
             color: $text-color;
-            font-size: 36px;
-            margin:0 0 32px;
+            font-size: 2.25em;
+            margin:0 0 2em;
         }
 
         &__subtitle {
             color:rgba($text-color, 0.8);
-            font-size: 18px;
-            margin: 0 0 48px;
+            font-size: 1.125em;
+            margin: 0 0 3em;
             font-weight: 500;
         }
     }

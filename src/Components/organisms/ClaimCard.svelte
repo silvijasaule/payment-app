@@ -33,20 +33,20 @@
 
         &__title {
             color: $text-color;
-            font-size: 36px;
-            margin:0 0 16px;
+            font-size: 2.25em;
+            margin:0 0 1em;
         }
 
         &__subtitle {
             color:rgba($text-color, 0.8);
-            font-size: 18px;
-            margin: 0 0 32px;
+            font-size: 1.125em;
+            margin: 0 0 2em;
             font-weight: 500;
         }
 
         &__note {
-            margin:16px 0 0;
-            font-size: 14px;
+            margin:1em 0 0;
+            font-size: 0.875em;
             color: $light-text-color;
 
             &--highlight {
@@ -60,8 +60,8 @@
         border-top: 1px solid rgba($color: $text-color, $alpha: 0.2);
         border-bottom: 1px solid rgba($color: $text-color, $alpha: 0.2);
         width:100%;
-        margin-bottom: 32px;
-        padding: 32px 0;
+        margin-bottom: 2em;
+        padding: 2em 0;
 
         &__container {
             display: flex;
@@ -69,22 +69,22 @@
             align-items: center;
 
             &--first {
-                margin-bottom: 12px;
+                margin-bottom: 0.75em;
             }
         }
 
         &__title {
-            font-size: 24px;
+            font-size: 1.5em;
             font-weight: 700;
             color: $text-color;
-            line-height: 32px;
+            line-height: 2em;
             margin:0;
         }
 
         &__amount {
             color: $light-text-color;
-            font-size: 24px;
-            line-height: 24px;
+            font-size: 1.5em;
+            line-height: 1.5em;
         }
     }
 </style>
