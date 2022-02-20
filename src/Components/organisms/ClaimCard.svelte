@@ -21,7 +21,7 @@
         </div>
 
     </div>
-	<Button title={"Claim All"} />
+	<Button title={"Claim All"} onClick />
     <p class="card__note"><span class="card__note--highlight">Note:</span> To get paid in a different token, please contact your employer.</p>
 </Card>
 

@@ -1,15 +1,16 @@
 <script>
     export let title;
+    export let onClick;
 </script>
 
-<button> 
+<button on:click={onClick}> 
     {title}
 </button>
 
 <style lang="scss">
 
     @import '../../styles/colors.scss';
-    
+
     button {
         background-color: $button-color;
         color: $white;
