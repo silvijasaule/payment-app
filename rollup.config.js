@@ -52,9 +52,6 @@ export default {
       compilerOptions: {
         // enable run-time checks when not in production
         dev: !production,
-        preprocess: [
-          scss({ /* scss options */ })
-        ]
       },
     }),
     // we'll extract any component CSS out into
