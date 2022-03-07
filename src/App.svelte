@@ -1,17 +1,16 @@
 <script>
-	import Router from 'svelte-spa-router';
 	import HelloCard from "./Components/organisms/HelloCard.svelte";
 	import ClaimCard from "./Components/organisms/ClaimCard.svelte";
-
-	const routes = {
-	'/': HelloCard,
-	'/claim/': ClaimCard
-	}
+	import { userConnected, networkSigner, chainID, connectWallet } from './stores/Network.js';
 
 </script>
 
 <main>
-	<Router {routes}/>
+	{#if !$userConnected}
+		<HelloCard/>
+	{:else}
+		<ClaimCard/>	
+	{/if}
 </main>
 
 <style>
