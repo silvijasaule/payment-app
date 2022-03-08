@@ -1,16 +1,20 @@
 <script>
-	import HelloCard from "./Components/organisms/HelloCard.svelte";
-	import ClaimCard from "./Components/organisms/ClaimCard.svelte";
-	import { userConnected } from './stores/Network.js';
+	// import HelloCard from "./Components/organisms/HelloCard.svelte";
+	// import ClaimCard from "./Components/organisms/ClaimCard.svelte";
+	import AddBalanceCard from "./Components/organisms/AddBalanceCard.svelte";
+
+	// import { userConnected } from './stores/Network.js';
 
 </script>
 
 <main>
-	{#if !$userConnected}
+	<AddBalanceCard/>
+
+	<!-- {#if !$userConnected}
 		<HelloCard/>
 	{:else}
 		<ClaimCard/>	
-	{/if}
+	{/if} -->
 </main>
 
 <style>
