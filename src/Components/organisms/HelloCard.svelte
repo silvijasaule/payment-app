@@ -1,8 +1,7 @@
 <script>
     import Card from '../atoms/Card.svelte';
 	import Button from '../atoms/Button.svelte';
-    import {push} from 'svelte-spa-router';
-    import { userConnected, networkSigner, chainID, connectWallet } from '../../stores/Network.js';
+    import { connectWallet } from '../../stores/Network.js';
 </script>
 
 <Card>

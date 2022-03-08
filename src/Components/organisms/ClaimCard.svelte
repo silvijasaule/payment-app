@@ -2,30 +2,32 @@
     import Card from '../atoms/Card.svelte';
 	import Button from '../atoms/Button.svelte';
     import { ethers } from 'ethers';
-    import { userConnected, networkSigner, chainID, connectWallet } from '../../stores/Network.js';
+    import { userConnected, networkSigner, networkProvider, connectWallet } from '../../stores/Network.js';
     import { paymentAppAbi } from '../../stores/ABI.js';
-
 
     export let monthlyEarnings;
     export let tokenName = 'bUSD';
     export let monthlyBonusAmount;
+    export const beneficiary = "0x73774102B7A588B31ED43d79903Ced2d48B543e3";
 
-    const provider = new ethers.providers.Web3Provider(window.ethereum);
-    const signer = provider.getSigner()
+    connectWallet();
+
 
     const paymentContractAddress = "0xd499423f80ec1BEd48BCb865A8a3B871Cef684eA";
-    const paymentAppContract = new ethers.Contract(paymentContractAddress, paymentAppAbi, provider);
+    const paymentAppContract = new ethers.Contract(paymentContractAddress, paymentAppAbi, $networkProvider);
 
-    $: if ($userConnected) {
-        fetchUserData();
+    const getBalance  = async () => {
+        const balance = await paymentAppContract.balanceOf();
+        monthlyEarnings = parseFloat(ethers.utils.formatEther(balance)).toFixed(4);
     }
 
-    const fetchUserData = async () => {
-        if ($userConnected){
-            monthlyEarnings = await $networkSigner.getBalance();
-            monthlyBonusAmount = await $networkSigner.bonusBalanceOf();
-        }
-    }
+    const getBonusBalance  = async () => {
+        const bonusBalance = await paymentAppContract.bonusBalanceOf();
+        monthlyBonusAmount = parseFloat(ethers.utils.formatEther(bonusBalance)).toFixed(4);
+    } 
+
+    getBalance();
+    getBonusBalance();
 
 </script>
 
@@ -35,11 +37,13 @@
     <div class="earnings">
         <div class="earnings__container earnings__container--first">
             <h4 class="earnings__title">Monthly:</h4>
-            <span class="earnings__amount">{monthlyEarnings ? parseFloat(ethers.utils.formatEther(monthlyEarnings)).toFixed(4) : '0'} {tokenName}</span>
+            <span class="earnings__amount">
+                {monthlyEarnings} {tokenName}
+            </span>
         </div>
         <div class="earnings__container">
             <h4 class="earnings__title">Bonus:</h4>
-            <span class="earnings__amount">{monthlyBonusAmount ? parseFloat(ethers.utils.formatEther(monthlyBonusAmount)).toFixed(4) : '0'} xToken</span>
+            <span class="earnings__amount">{monthlyBonusAmount} xToken</span>
         </div>
 
     </div>

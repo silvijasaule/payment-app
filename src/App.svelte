@@ -1,7 +1,7 @@
 <script>
 	import HelloCard from "./Components/organisms/HelloCard.svelte";
 	import ClaimCard from "./Components/organisms/ClaimCard.svelte";
-	import { userConnected, networkSigner, chainID, connectWallet } from './stores/Network.js';
+	import { userConnected } from './stores/Network.js';
 
 </script>
 
