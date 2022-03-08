@@ -10,8 +10,10 @@
     export let monthlyBonusAmount;
     export const beneficiary = "0x73774102B7A588B31ED43d79903Ced2d48B543e3";
 
-    connectWallet();
-
+    $: if(userConnected) {
+        getBalance();
+        getBonusBalance();
+    }
 
     const paymentContractAddress = "0xd499423f80ec1BEd48BCb865A8a3B871Cef684eA";
     const paymentAppContract = new ethers.Contract(paymentContractAddress, paymentAppAbi, $networkProvider);
@@ -26,17 +28,12 @@
         monthlyBonusAmount = parseFloat(ethers.utils.formatEther(bonusBalance)).toFixed(4);
     }
 
-    getBalance();
-    getBonusBalance();
-
     const paymentAppContractWithSigner = paymentAppContract.connect($networkSigner);
 
     const claimAll  = async () => {
         await paymentAppContractWithSigner.claimTokens();
         console.log("balance claimed");
     }
-
-
 </script>
 
 <Card>
@@ -53,7 +50,6 @@
             <h4 class="earnings__title">Bonus:</h4>
             <span class="earnings__amount">{monthlyBonusAmount} xToken</span>
         </div>
-
     </div>
 	<Button title={"Claim All"} onClick={claimAll} />
     <p class="card__note"><span class="card__note--highlight">Note:</span> To get paid in a different token, please contact your employer.</p>
