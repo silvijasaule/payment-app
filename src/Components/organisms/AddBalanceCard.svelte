@@ -6,16 +6,17 @@
     import { paymentAppAbi } from '../../stores/ABI.js';
 
     export let tokenName = 'bUSD';
-    // export const beneficiary = "0x73774102B7A588B31ED43d79903Ced2d48B543e3";
+    let amount;
+    let bonusAmount;
 
-    // const paymentContractAddress = "0xd499423f80ec1BEd48BCb865A8a3B871Cef684eA";
-    // const paymentAppContract = new ethers.Contract(paymentContractAddress, paymentAppAbi, $networkProvider);
-    // const paymentAppContractWithSigner = paymentAppContract.connect($networkSigner);
+    const paymentContractAddress = "0xd499423f80ec1BEd48BCb865A8a3B871Cef684eA";
+    const paymentAppContract = new ethers.Contract(paymentContractAddress, paymentAppAbi, $networkProvider);
+    const paymentAppContractWithSigner = paymentAppContract.connect($networkSigner);
 
-    // const claimAll  = async () => {
-    //     await paymentAppContractWithSigner.claimTokens();
-    //     console.log("balance claimed");
-    // }
+    const addNewBalance  = async () => {
+        await paymentAppContractWithSigner.addNewBalance(ethers.utils.parseEther(amount), ethers.utils.parseEther(bonusAmount));
+        console.log("new balance added");
+    }
 </script>
 
 <Card>
@@ -24,22 +25,22 @@
     <div class="earnings">
         <div class="earnings__container earnings__container--first">
             <h4 class="earnings__title">Monthly:</h4>
-            <label for="inp" class="inp">
-                <input type="text" id="inp" placeholder="&nbsp;">
+            <label for="monthlyPayment" class="inp">
+                <input type="text" id="monthlyPayment" placeholder="&nbsp;" bind:value={amount}>
                 <span class="focus-bg"></span>
             </label>
             <span class="earnings__amount"> {tokenName}</span>
         </div>
         <div class="earnings__container">
             <h4 class="earnings__title">Bonus:</h4>
-            <label for="inp" class="inp">
-                <input type="text" id="inp" placeholder="&nbsp;">
+            <label for="bonusPayment" class="inp">
+                <input type="text" id="bonusPayment" placeholder="&nbsp;" bind:value={bonusAmount}>
                 <span class="focus-bg"></span>
             </label>
-            <span class="earnings__amount"> xToken</span>
+            <span class="earnings__amount"> x Token</span>
         </div>
     </div>
-	<Button title={"Add balance"} onClick />
+	<Button title={"Add balance"} onClick={addNewBalance} />
 </Card>
 
 <style lang="scss">
