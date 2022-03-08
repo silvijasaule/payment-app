@@ -24,10 +24,18 @@
     const getBonusBalance  = async () => {
         const bonusBalance = await paymentAppContract.bonusBalanceOf();
         monthlyBonusAmount = parseFloat(ethers.utils.formatEther(bonusBalance)).toFixed(4);
-    } 
+    }
 
     getBalance();
     getBonusBalance();
+
+    const paymentAppContractWithSigner = paymentAppContract.connect($networkSigner);
+
+    const claimAll  = async () => {
+        await paymentAppContractWithSigner.claimTokens();
+        console.log("balance claimed");
+    }
+
 
 </script>
 
@@ -47,7 +55,7 @@
         </div>
 
     </div>
-	<Button title={"Claim All"} onClick />
+	<Button title={"Claim All"} onClick={claimAll} />
     <p class="card__note"><span class="card__note--highlight">Note:</span> To get paid in a different token, please contact your employer.</p>
 </Card>
 
