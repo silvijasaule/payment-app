@@ -43,12 +43,12 @@
         <div class="earnings__container earnings__container--first">
             <h4 class="earnings__title">Monthly:</h4>
             <span class="earnings__amount">
-                {monthlyEarnings} {tokenName}
+                {monthlyEarnings ? monthlyEarnings : '0'} {tokenName}
             </span>
         </div>
         <div class="earnings__container">
             <h4 class="earnings__title">Bonus:</h4>
-            <span class="earnings__amount">{monthlyBonusAmount} xToken</span>
+            <span class="earnings__amount">{monthlyBonusAmount ? monthlyBonusAmount : '0'} xToken</span>
         </div>
     </div>
 	<Button title={"Claim All"} onClick={claimAll} />
