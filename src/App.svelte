@@ -1,7 +1,9 @@
 <script>
 	import HelloCard from "./Components/organisms/HelloCard.svelte";
 	// import ClaimCard from "./Components/organisms/ClaimCard.svelte";
-	import AddBalanceCard from "./Components/organisms/AddBalanceCard.svelte";
+	// import AddBalanceCard from "./Components/organisms/AddBalanceCard.svelte";
+	import NotAuthorizedCard from "./Components/organisms/NotAuthorizedCard.svelte";
+
 
 	import { userConnected } from './stores/Network.js';
 
@@ -13,7 +15,7 @@
 	{#if !$userConnected}
 		<HelloCard/>
 	{:else}
-	<AddBalanceCard/>	
+		<NotAuthorizedCard/>	
 	{/if}
 </main>
 
