@@ -5,26 +5,21 @@
 	import NotAuthorizedCard from "./Components/organisms/NotAuthorizedCard.svelte";
 	import { userAddress, userConnected } from './stores/Network.js';
 
-	// const beneficiary = "0x73774102b7a588b31ed43d79903ced2d48b543e3";
-	// let userWalletAddress;
-
-	// const getUserAddress = async () => {
-	// 	userWalletAddress = userAddress;
-	// 	return userWalletAddress;
-	// }
-
+	const beneficiary = "0x73774102B7A588B31ED43d79903Ced2d48B543e3";
+	const owner = "0xC370b50eC6101781ed1f1690A00BF91cd27D77c4";
 </script>
 
 <main>
 	{#if !$userConnected}
 		<HelloCard/>
-	{:else if $userConnected && $userAddress == "0x73774102b7a588b31ed43d79903ced2d48b543e3"}
+	{:else if $userConnected && $userAddress == beneficiary}
 		<ClaimCard/>
-	{:else if $userConnected && $userAddress == "0xC370b50eC6101781ed1f1690A00BF91cd27D77c4"}
+	{:else if $userConnected && $userAddress == owner}
 		<AddBalanceCard/>
 	{:else}
 		<NotAuthorizedCard/>	
 	{/if}
+
 </main>
 
 <style>
