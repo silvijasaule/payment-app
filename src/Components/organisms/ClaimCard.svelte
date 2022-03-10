@@ -2,14 +2,14 @@
     import Card from '../atoms/Card.svelte';
 	import Button from '../atoms/Button.svelte';
     import { ethers } from 'ethers';
-    import { userConnected, networkSigner, networkProvider, connectWallet } from '../../stores/Network.js';
+    import { userConnected, networkSigner, networkProvider } from '../../stores/Network.js';
     import { paymentAppAbi } from '../../stores/ABI.js';
     import { ERC20Abi } from '../../stores/ERC20ABI.js';
 
-    export let paymentTokenSymbol;
-    export let bonusTokenSymbol;
-    export let monthlyEarnings;
-    export let monthlyBonusAmount;
+    let paymentTokenSymbol;
+    let bonusTokenSymbol;
+    let monthlyEarnings;
+    let monthlyBonusAmount;
 
     $: if($userConnected) {
         getBalance();
@@ -20,6 +20,7 @@
 
     const paymentContractAddress = "0xd499423f80ec1BEd48BCb865A8a3B871Cef684eA";
     const paymentAppContract = new ethers.Contract(paymentContractAddress, paymentAppAbi, $networkProvider);
+    const paymentAppContractWithSigner = paymentAppContract.connect($networkSigner);
 
     const getTokenSymbol = async () => {
         const mainToken = await paymentAppContract.paymentToken.call();
@@ -44,8 +45,6 @@
         const bonusBalance = await paymentAppContract.bonusBalanceOf();
         monthlyBonusAmount = parseFloat(ethers.utils.formatEther(bonusBalance)).toFixed(4);
     }
-
-    const paymentAppContractWithSigner = paymentAppContract.connect($networkSigner);
 
     const claimAll  = async () => {
         await paymentAppContractWithSigner.claimTokens();

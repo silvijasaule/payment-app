@@ -2,16 +2,48 @@
     import Card from '../atoms/Card.svelte';
 	import Button from '../atoms/Button.svelte';
     import { ethers } from 'ethers';
-    import { userConnected, networkSigner, networkProvider, connectWallet } from '../../stores/Network.js';
+    import { networkSigner, networkProvider, userConnected } from '../../stores/Network.js';
     import { paymentAppAbi } from '../../stores/ABI.js';
+    import { ERC20Abi } from '../../stores/ERC20ABI.js';
 
-    export let tokenName = 'bUSD';
     let amount;
     let bonusAmount;
+    let paymentTokenSymbol;
+    let bonusTokenSymbol;
+
+    $: if($userConnected) {
+        getTokenSymbol();
+        getBonusTokenSymbol();
+    }
 
     const paymentContractAddress = "0xd499423f80ec1BEd48BCb865A8a3B871Cef684eA";
     const paymentAppContract = new ethers.Contract(paymentContractAddress, paymentAppAbi, $networkProvider);
     const paymentAppContractWithSigner = paymentAppContract.connect($networkSigner);
+
+    const getTokenSymbol = async () => {
+        const mainToken = await paymentAppContract.paymentToken.call();
+        console.log(mainToken);
+        const erc20contract = new ethers.Contract(mainToken, ERC20Abi, $networkProvider);
+        console.log(erc20contract);
+
+        paymentTokenSymbol = await erc20contract.symbol();
+        console.log(paymentTokenSymbol);
+
+        return paymentTokenSymbol;
+    }
+
+    const getBonusTokenSymbol = async () => {
+        const bonusToken = await paymentAppContract.bonusToken.call();
+        console.log(bonusToken);
+
+        const erc20contract = new ethers.Contract(bonusToken, ERC20Abi, $networkProvider);
+        console.log(erc20contract);
+
+        bonusTokenSymbol = await erc20contract.symbol();
+        console.log(bonusTokenSymbol);
+
+        return bonusTokenSymbol;
+    }
 
     const addNewBalance  = async () => {
         await paymentAppContractWithSigner.addNewBalance(ethers.utils.parseEther(amount), ethers.utils.parseEther(bonusAmount));
@@ -29,7 +61,7 @@
                 <input type="text" id="monthlyPayment" placeholder="&nbsp;" bind:value={amount}>
                 <span class="focus-bg"></span>
             </label>
-            <span class="earnings__amount"> {tokenName}</span>
+            <span class="earnings__amount"> {paymentTokenSymbol ? paymentTokenSymbol : ""}</span>
         </div>
         <div class="earnings__container">
             <h4 class="earnings__title">Bonus:</h4>
@@ -37,7 +69,7 @@
                 <input type="text" id="bonusPayment" placeholder="&nbsp;" bind:value={bonusAmount}>
                 <span class="focus-bg"></span>
             </label>
-            <span class="earnings__amount"> x Token</span>
+            <span class="earnings__amount"> {bonusTokenSymbol ? bonusTokenSymbol : ""}</span>
         </div>
     </div>
 	<Button title={"Add balance"} onClick={addNewBalance} />

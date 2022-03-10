@@ -22,7 +22,6 @@
 	{:else}
 		<NotAuthorizedCard/>	
 	{/if}
-
 </main>
 
 <style>
