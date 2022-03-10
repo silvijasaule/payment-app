@@ -4,19 +4,36 @@
     import { ethers } from 'ethers';
     import { userConnected, networkSigner, networkProvider, connectWallet } from '../../stores/Network.js';
     import { paymentAppAbi } from '../../stores/ABI.js';
+    import { ERC20Abi } from '../../stores/ERC20ABI.js';
 
+    export let paymentTokenSymbol;
+    export let bonusTokenSymbol;
     export let monthlyEarnings;
-    export let tokenName = 'bUSD';
     export let monthlyBonusAmount;
-    export const beneficiary = "0x73774102B7A588B31ED43d79903Ced2d48B543e3";
 
-    $: if(userConnected) {
+    $: if($userConnected) {
         getBalance();
         getBonusBalance();
+        getTokenSymbol();
+        getBonusTokenSymbol();
     }
 
     const paymentContractAddress = "0xd499423f80ec1BEd48BCb865A8a3B871Cef684eA";
     const paymentAppContract = new ethers.Contract(paymentContractAddress, paymentAppAbi, $networkProvider);
+
+    const getTokenSymbol = async () => {
+        const mainToken = await paymentAppContract.paymentToken.call();
+        const erc20contract = new ethers.Contract(mainToken, ERC20Abi, $networkProvider);
+        paymentTokenSymbol = await erc20contract.symbol();
+        return paymentTokenSymbol;
+    }
+
+    const getBonusTokenSymbol = async () => {
+        const bonusToken = await paymentAppContract.bonusToken.call();
+        const erc20contract = new ethers.Contract(bonusToken, ERC20Abi, $networkProvider);
+        bonusTokenSymbol = await erc20contract.symbol();
+        return bonusTokenSymbol;
+    }
 
     const getBalance  = async () => {
         const balance = await paymentAppContract.balanceOf();
@@ -43,12 +60,12 @@
         <div class="earnings__container earnings__container--first">
             <h4 class="earnings__title">Monthly:</h4>
             <span class="earnings__amount">
-                {monthlyEarnings ? monthlyEarnings : '0'} {tokenName}
+                {monthlyEarnings ? monthlyEarnings : '0'} {paymentTokenSymbol ? paymentTokenSymbol : ""}
             </span>
         </div>
         <div class="earnings__container">
             <h4 class="earnings__title">Bonus:</h4>
-            <span class="earnings__amount">{monthlyBonusAmount ? monthlyBonusAmount : '0'} xToken</span>
+            <span class="earnings__amount">{monthlyBonusAmount ? monthlyBonusAmount : '0'} x {bonusTokenSymbol ? bonusTokenSymbol : ""}</span>
         </div>
     </div>
 	<Button title={"Claim All"} onClick={claimAll} />
