@@ -1,19 +1,25 @@
 <script>
 	import HelloCard from "./Components/organisms/HelloCard.svelte";
-	// import ClaimCard from "./Components/organisms/ClaimCard.svelte";
+	import ClaimCard from "./Components/organisms/ClaimCard.svelte";
 	// import AddBalanceCard from "./Components/organisms/AddBalanceCard.svelte";
 	import NotAuthorizedCard from "./Components/organisms/NotAuthorizedCard.svelte";
+	import { userAddress, userConnected } from './stores/Network.js';
 
+	// const beneficiary = "0x73774102b7a588b31ed43d79903ced2d48b543e3";
+	// let userWalletAddress;
 
-	import { userConnected } from './stores/Network.js';
+	// const getUserAddress = async () => {
+	// 	userWalletAddress = userAddress;
+	// 	return userWalletAddress;
+	// }
 
 </script>
 
 <main>
-	
-
 	{#if !$userConnected}
 		<HelloCard/>
+	{:else if $userConnected && $userAddress == "0x73774102b7a588b31ed43d79903ced2d48b543e3"}
+		<ClaimCard/>
 	{:else}
 		<NotAuthorizedCard/>	
 	{/if}

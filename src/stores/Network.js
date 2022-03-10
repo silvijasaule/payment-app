@@ -15,4 +15,5 @@ export const connectWallet = async () => {
   userAddress.set(await signer.getAddress());
   chainID.set(await ethereum.request({ method: "eth_chainId" }));
   userConnected.set(true);
+  console.log("wallet connected");
 };
